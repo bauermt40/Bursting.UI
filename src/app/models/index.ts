@@ -1,1 +1,0 @@
-export { ReportModel } from './report.model';
