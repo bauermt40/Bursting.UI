@@ -5,9 +5,13 @@ import { HttpModule } from '@angular/http';
 import 'jquery';
 
 import { AppComponent } from './app.component';
-import { FooterComponent } from './ui/footer/footer.component';
-import { DistributionListComponent } from './ui/distribution-list/distribution-list.component';
-import { HeaderComponent } from './ui/header/header.component';
+import { 
+  FooterComponent, 
+  DistributionListComponent, 
+  HeaderComponent 
+} from './ui';
+
+import { DistributionListService } from './services/distribution-list.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,7 @@ import { HeaderComponent } from './ui/header/header.component';
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [DistributionListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

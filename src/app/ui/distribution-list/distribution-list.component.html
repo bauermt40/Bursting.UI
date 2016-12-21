@@ -20,19 +20,10 @@
         <th></th>
         <th></th>
     </tr>
-    <tr>
+    <tr *ngFor="let item of distributionList">
         <td></td>
-        <td>Test Name</td>
-        <td>test@test</td>
-        <td>11/22/2016 9:33AM</td>
-        <td>11/02/2016 2:45PM</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>Test Name</td>
-        <td>test@test</td>
+        <td>{{item.Name}}</td>
+        <td>example@list.com</td>
         <td>11/22/2016 9:33AM</td>
         <td>11/02/2016 2:45PM</td>
         <td></td>
