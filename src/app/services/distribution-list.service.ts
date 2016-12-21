@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 
 import { environment } from './../../environments/environment';
 import { DistributionItem } from './../models/distribution-item';
@@ -9,32 +10,25 @@ import { DistributionItem } from './../models/distribution-item';
 @Injectable()
 export class DistributionListService {
 
-  constructor(private http: Http) {}
+  private page: number = 1;
+  private pageSize: number = 15;
+  private headers: Headers;
+
+  constructor(private http: Http) {
+    this.headers = new Headers();
+    this.headers.append('Content-Type', 'application/json');
+    this.headers.append('Accept', 'application/json');
+  }
 
   getAll(): Observable<DistributionItem[]> {
-    let item$ = this.http
-                  .get(`${environment.apiUrl}/v1/distributionlist`, {headers: this.getHeaders()})
-                  .map(this.mapDistributionItem);
-                  return item$;
+    return this.http
+            .get(`${environment.apiUrl}/v1/distributionlist?pagination.page=${this.page}&pagination.pageSize=${this.pageSize}`)
+            .map((response: Response) => <DistributionItem[]>response.json())
+            .catch(this.handleError);
   }
 
-  private mapDistributionItem(response:Response): DistributionItem[] {
-    return response.json().results.map(this.toDistributionItem);
-  }
-
-  private toDistributionItem(r: any): DistributionItem {
-    let item = <DistributionItem>({
-      DistributionListId: r.DistributionListId,
-      Name: r.Name,
-      ClientId: r.ClientId,
-      ReportId: r.ReportId
-    });
-    return item;
-  }
-
-  private getHeaders(){
-    let headers = new Headers();
-    headers.append('Accept', 'application/json');
-    return headers;
+  private handleError(error: Response) {
+    console.error(error);
+    return Observable.throw(error.json().error || ' error');
   }
 }

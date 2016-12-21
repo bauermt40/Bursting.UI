@@ -12,11 +12,17 @@ export class DistributionListComponent implements OnInit {
 
   distributionList: DistributionItem[] = [];
 
-  constructor(private listService:DistributionListService) { }
+  constructor(private _listService:DistributionListService) { }
 
   ngOnInit() {
-    this.listService
+    this.getAllItems();
+  }
+
+  private getAllItems(): void {
+    this._listService
       .getAll()
-      .subscribe(i => this.distributionList = i);
+      .subscribe((items:DistributionItem[]) => this.distributionList = items,
+                  error => console.log(error),
+                  () => console.log('Get all items complete'));
   }
 }

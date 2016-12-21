@@ -17,17 +17,14 @@
         <th>Email</th>
         <th>Date Last Run</th>
         <th>Last Updated</th>
-        <th></th>
-        <th></th>
     </tr>
-    <tr *ngFor="let item of distributionList">
+    <tr *ngFor="let item of distributionList; let i = index; let even = even; let odd = odd;"
+        [ngClass]="{ oddRows: odd, evenRows: even }">
         <td></td>
         <td>{{item.Name}}</td>
-        <td>example@list.com</td>
-        <td>11/22/2016 9:33AM</td>
-        <td>11/02/2016 2:45PM</td>
-        <td></td>
-        <td></td>
+        <td>Example{{i}}@list.com</td>
+        <td>{{item.META_DateCreated | date:'MMM dd, yyyy'}}</td>
+        <td>{{item.META_DateCreated | date:'MMM dd, yyyy'}}</td>
     </tr>
 </table>
 </div>
